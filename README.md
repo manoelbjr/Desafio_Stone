@@ -1,3 +1,3 @@
-## Formação em Elixir Stone Pagamentos | Teste Técnico
+# Formação em Elixir Stone Pagamentos | Desafio Técnico
 
-# Desafio_Stone
+## Desafio_Stone
