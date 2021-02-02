@@ -1,10 +1,7 @@
 "use strict";
 
-const QUANTIDADE_EMAILS = gerarRandomInt(0,30);
-const QUANTIDADE_ITENS = gerarRandomInt(0,1000);
-
 /* 
-Função para gerar inteiros aleatórios dado um range Max e Min;
+Função para gerar inteiros aleatórios dado um range Min e Max;
 */
 function gerarRandomInt(min, max){
   min = Math.ceil(min);
@@ -41,7 +38,6 @@ function gerarItens(tamanhoLista){
       
       conjuntoItens.add(item)
   }
-
   return Array.from(conjuntoItens);
 }
 
@@ -49,13 +45,16 @@ function gerarItens(tamanhoLista){
 Conforme regra de negócio, o email é UNIQUE.
 Decidi por utilizar o SET, pois o Set permite apenas uma ocorrência para o mesmo valor informado;
 A função retorna um Array a partir do Set de emails.
-
-https://tools.ietf.org/html/rfc5321
+------
+A função retorna emails com tamanho padrão da RFC5321, ou seja, email de tamanho máximo 255 caracteres, 
+sendo 64 caracteres máximos no nome e 191 caracteres máximos no domínio.
+A função retorna pelo menos um caractere no nome e pelo menos 1 caractere na parte do domínio.
 */
 function gerarEmails(tamanhoLista){
   let qntCharNome;
   let qntCharDominio;
   let conjuntoEmails = new Set();
+  
   for(let i=0; i<tamanhoLista;i++){
     qntCharNome = gerarRandomInt(1,64);
     qntCharDominio = gerarRandomInt(1,191);
@@ -91,10 +90,6 @@ function distribuiValorRestante(lista, valorParaDistribuir){
   return lista;
 };
 
-/*==================== MAIN ========================*/
-let itens = gerarItens(QUANTIDADE_ITENS);
-let emails = gerarEmails(QUANTIDADE_EMAILS);
-
 
 function calcula(itens, emails){
   
@@ -102,25 +97,39 @@ function calcula(itens, emails){
   
   let valorItens = valorTotalItens(itens);
   let quantidadeEmails = emails.length;
-  let valorMinimo = Math.floor(valorItens/quantidadeEmails);
-  let restante = valorItens-(valorMinimo*quantidadeEmails)
+  let valorMinimo = 0;
+  let restante = 0;
+  
+  if(quantidadeEmails<1){
+    console.log("A lista de Emails não possui pessoas cadastradas.")
+  }else{
+    valorMinimo = Math.floor(valorItens/quantidadeEmails);
+    restante = valorItens-(valorMinimo*quantidadeEmails);
+  }
   
   emails.forEach(email=>{
     resultado.push({pessoa : email, valor: valorMinimo});
   });
-
+  
   if(restante>0){
     resultado = distribuiValorRestante(resultado, restante);
   }
-   
-  console.log(`O valor total dos Itens ${valorItens}`);
-  console.log(`A quantidade de Emails ${emails.length}`);
-  console.log(`Valor para cada usuário ${valorMinimo}`);
-  console.log(`O valor restante, após divisão mínima, é ${restante}`);
- 
+  
+  console.log(`Valor total dos Itens (em ¢entavos de R$): ${valorItens}`);
+  console.log(`Quantidade de Pessoas: ${emails.length}`);
+  // console.log(`Valor para Mínimo para cada usuário ${valorMinimo}`);
+  // console.log(`Valor restante, após divisão mínima, é ${restante}`);
+  
   return resultado;
-
+  
 }
+/*==================== MAIN ========================*/
+
+const QUANTIDADE_EMAILS = gerarRandomInt(0,8999);
+const QUANTIDADE_ITENS = gerarRandomInt(0,5698840);
+
+let itens = gerarItens(QUANTIDADE_ITENS);
+let emails = gerarEmails(QUANTIDADE_EMAILS);
 
 let mapaFinal = calcula(itens, emails);
-console.log(mapaFinal);
+console.table(mapaFinal);
