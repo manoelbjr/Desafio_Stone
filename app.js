@@ -75,7 +75,7 @@ function valorTotalItens(itens){
   return total;
 }
 
-/*  CONCLUIR ESSA FUNÇÃO */
+/* Função para distribuir na lista o resto inteiro da divisão */
 function distribuiValorRestante(lista, valorParaDistribuir){
  
   let contador = 0;
