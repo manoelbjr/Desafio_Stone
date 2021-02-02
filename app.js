@@ -115,11 +115,10 @@ function calcula(itens, emails){
     }
   }
   
-  
-  console.log(`Valor total dos Itens (em centavos de R$): ${valorItens}`);
-  console.log(`Quantidade de Pessoas: ${emails.length}`);
-  console.log(`Valor para Mínimo para cada usuário ${valorMinimo}`);
-  console.log(`Valor restante, após divisão mínima, é ${restante}`);
+  // console.log(`Valor total dos Itens (em centavos de R$): ${valorItens}`);
+  // console.log(`Quantidade de Pessoas: ${emails.length}`);
+  // console.log(`Valor para Mínimo para cada usuário ${valorMinimo}`);
+  // console.log(`Valor restante, após divisão mínima, é ${restante}`);
   
   return resultado;
   
