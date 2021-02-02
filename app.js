@@ -30,8 +30,7 @@ Gera uma lista de itens, dado tamanho
 */
 function gerarItens(tamanhoLista){
   let conjuntoItens = new Set();
-  let item = {nome: "", quantidade: 0, precoUnitario: 0};
-
+ 
   for(let i=0; i<tamanhoLista;i++){
 
       let item = {
@@ -82,12 +81,26 @@ let emails = gerarEmails(QUANTIDADE_EMAILS);
 
 function calcula(itens, emails){
   
-  let resultado = new Map(), pessoa = "", valor = 0; 
+  let resultado = new Map();
+  let pessoa = "";
+  let valor = 0; 
 
+  let valorItens = valorTotalItens(itens);
+  let quantidadeEmails = emails.length;
+
+  console.log(`O valor total dos Itens ${valorItens}`);
+  console.log(`A quantidade de Emails ${emails.length}`);
+  console.log(`Valor para cada usuário ${Math.floor(valorItens/quantidadeEmails)}`)
+
+  /*
+    passo 1: valor INICIAL pra cada email = Math.floor(valorItens/quantidadeEmails)
+    passo 2: calcula o que sobrou do valor total (resto inteiro da divisão)
+    passo 3: entrega +1 centavo pra cada email até que o resto seja zero
+  */
   return resultado;
 
 }
+calcula(itens, emails);
+
 // console.log(gerarItens(QUANTIDADE_ITENS));
-console.log(valorTotalItens(itens));
 // console.log(gerarEmails(QUANTIDADE_EMAILS));
-console.log(emails.length);
