@@ -1,6 +1,6 @@
 "use strict";
 
-const QUANTIDADE_EMAILS = gerarRandomInt(0,1000);
+const QUANTIDADE_EMAILS = gerarRandomInt(0,30);
 const QUANTIDADE_ITENS = gerarRandomInt(0,1000);
 
 /* 
@@ -54,10 +54,12 @@ https://tools.ietf.org/html/rfc5321
 */
 function gerarEmails(tamanhoLista){
   let qntCharNome;
+  let qntCharDominio;
   let conjuntoEmails = new Set();
   for(let i=0; i<tamanhoLista;i++){
     qntCharNome = gerarRandomInt(1,64);
-    conjuntoEmails.add(stringAleatoria(qntCharNome)+`@`+stringAleatoria(qntCharNome));
+    qntCharDominio = gerarRandomInt(1,191);
+    conjuntoEmails.add(stringAleatoria(qntCharNome)+"@"+stringAleatoria(qntCharDominio));
   }
   
   return Array.from(conjuntoEmails);
@@ -74,6 +76,21 @@ function valorTotalItens(itens){
   return total;
 }
 
+/*  CONCLUIR ESSA FUNÇÃO */
+function distribuiValorRestante(lista, valorParaDistribuir){
+ 
+  let contador = 0;
+ 
+  for(let i=0; i<lista.length; i++){
+    if(valorParaDistribuir<=0){break;}
+    
+    lista[i].valor = lista[i].valor + 1;
+    valorParaDistribuir--;
+  }
+
+  return lista;
+};
+
 /*==================== MAIN ========================*/
 let itens = gerarItens(QUANTIDADE_ITENS);
 let emails = gerarEmails(QUANTIDADE_EMAILS);
@@ -81,26 +98,29 @@ let emails = gerarEmails(QUANTIDADE_EMAILS);
 
 function calcula(itens, emails){
   
-  let resultado = new Map();
-  let pessoa = "";
-  let valor = 0; 
-
+  let resultado = new Array();
+  
   let valorItens = valorTotalItens(itens);
   let quantidadeEmails = emails.length;
+  let valorMinimo = Math.floor(valorItens/quantidadeEmails);
+  let restante = valorItens-(valorMinimo*quantidadeEmails)
+  
+  emails.forEach(email=>{
+    resultado.push({pessoa : email, valor: valorMinimo});
+  });
 
+  if(restante>0){
+    resultado = distribuiValorRestante(resultado, restante);
+  }
+   
   console.log(`O valor total dos Itens ${valorItens}`);
   console.log(`A quantidade de Emails ${emails.length}`);
-  console.log(`Valor para cada usuário ${Math.floor(valorItens/quantidadeEmails)}`)
-
-  /*
-    passo 1: valor INICIAL pra cada email = Math.floor(valorItens/quantidadeEmails)
-    passo 2: calcula o que sobrou do valor total (resto inteiro da divisão)
-    passo 3: entrega +1 centavo pra cada email até que o resto seja zero
-  */
+  console.log(`Valor para cada usuário ${valorMinimo}`);
+  console.log(`O valor restante, após divisão mínima, é ${restante}`);
+ 
   return resultado;
 
 }
-calcula(itens, emails);
 
-// console.log(gerarItens(QUANTIDADE_ITENS));
-// console.log(gerarEmails(QUANTIDADE_EMAILS));
+let mapaFinal = calcula(itens, emails);
+console.log(mapaFinal);
