@@ -32,8 +32,8 @@ function gerarItens(tamanhoLista){
 
       let item = {
         nome: stringAleatoria(5), 
-        quantidade: gerarRandomInt(0,3000), 
-        precoUnitario: gerarRandomInt(0,300000)
+        quantidade: gerarRandomInt(0,9999), 
+        precoUnitario: gerarRandomInt(0,999999)
       };
       
       conjuntoItens.add(item)
@@ -105,28 +105,29 @@ function calcula(itens, emails){
   }else{
     valorMinimo = Math.floor(valorItens/quantidadeEmails);
     restante = valorItens-(valorMinimo*quantidadeEmails);
+
+    emails.forEach(email=>{
+      resultado.push({pessoa : email, valor: valorMinimo});
+    });
+    
+    if(restante>0){
+      resultado = distribuiValorRestante(resultado, restante);
+    }
   }
   
-  emails.forEach(email=>{
-    resultado.push({pessoa : email, valor: valorMinimo});
-  });
   
-  if(restante>0){
-    resultado = distribuiValorRestante(resultado, restante);
-  }
-  
-  console.log(`Valor total dos Itens (em ¢entavos de R$): ${valorItens}`);
+  console.log(`Valor total dos Itens (em centavos de R$): ${valorItens}`);
   console.log(`Quantidade de Pessoas: ${emails.length}`);
-  // console.log(`Valor para Mínimo para cada usuário ${valorMinimo}`);
-  // console.log(`Valor restante, após divisão mínima, é ${restante}`);
+  console.log(`Valor para Mínimo para cada usuário ${valorMinimo}`);
+  console.log(`Valor restante, após divisão mínima, é ${restante}`);
   
   return resultado;
   
 }
 /*==================== MAIN ========================*/
 
-const QUANTIDADE_EMAILS = gerarRandomInt(0,8999);
-const QUANTIDADE_ITENS = gerarRandomInt(0,5698840);
+const QUANTIDADE_EMAILS = gerarRandomInt(0,9999);
+const QUANTIDADE_ITENS = gerarRandomInt(0,99999);
 
 let itens = gerarItens(QUANTIDADE_ITENS);
 let emails = gerarEmails(QUANTIDADE_EMAILS);

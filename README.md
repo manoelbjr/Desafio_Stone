@@ -1,3 +1,13 @@
 # Formação em Elixir Stone Pagamentos | Desafio Técnico
 
-## Desafio_Stone
+### Requisitos
+
+Para executar a aplicação é necessário utilizar o NodeJs:
+
+```
+node app.js
+```
+
+### Descrição
+
+
