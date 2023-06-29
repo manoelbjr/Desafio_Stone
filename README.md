@@ -31,7 +31,7 @@ Caso a lista de emails seja vazia, a aplicação informa que a lista não possui
 
 Caso a lista de produtos é vazia, cada pessoa da lista de emails pagará o valor '0'.
 
-### Detalhes
+### Detalhe
 
 A função principal, ``calcula(itens, emails)``, calcula o valor total dos itens, divide o valor total dos itens pela quantidade de emails cadastrados. Como essa divisão naturalmente resultará um número de ponto flutuante, utilizamos a função Piso ``Math.floor(x)``  que retorna o menor número inteiro dentre o número "x".
 
